@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block content %}
+        <!-- Contenido principal -->
+        <div class="drawer-content flex flex-col">
+            <!-- Header móvil fijo -->
+            <header class="mobile-header navbar bg-base-100 shadow-sm lg:hidden">
+                <div class="navbar-start">
+                    <label for="my-drawer-2" class="btn btn-ghost drawer-button lg:hidden">
+                        <i class="fas fa-bars text-xl"></i>
+                    </label>
+                </div>
+                <div class="navbar-center">
+                    <a class="btn btn-ghost text-xl font-bold">PowerFit</a>
+                </div>
+                <div class="navbar-end">
+                    <button class="btn btn-ghost btn-circle">
+                        <i class="fas fa-bell"></i>
+                    </button>
+                </div>
+            </header>
+            
+            <!-- Contenido con padding para el header móvil -->
+            <main class="mobile-content flex-1 p-4 lg:p-6">
+                <div class="hero bg-base-100 rounded-lg shadow">
+                    <div class="hero-content text-center">
+                        <div class="max-w-md">
+                            <h1 class="text-5xl font-bold">Bienvenido a PowerFit</h1>
+                            <p class="py-6">Tu gimnasio de confianza para alcanzar tus metas fitness.</p>
+                            <button class="btn btn-primary">Comenzar Entrenamiento</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Contenido adicional de ejemplo -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+                    <div class="card bg-base-100 shadow-xl">
+                        <div class="card-body">
+                            <h2 class="card-title">Rutinas Personalizadas</h2>
+                            <p>Plan de entrenamiento adaptado a tus objetivos.</p>
+                            <div class="card-actions justify-end">
+                                <button class="btn btn-primary">Ver más</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card bg-base-100 shadow-xl">
+                        <div class="card-body">
+                            <h2 class="card-title">Clases Grupales</h2>
+                            <p>Yoga, spinning, crossfit y más.</p>
+                            <div class="card-actions justify-end">
+                                <button class="btn btn-primary">Ver más</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card bg-base-100 shadow-xl">
+                        <div class="card-body">
+                            <h2 class="card-title">Seguimiento de Progreso</h2>
+                            <p>Monitorea tu evolución con nuestras herramientas.</p>
+                            <div class="card-actions justify-end">
+                                <button class="btn btn-primary">Ver más</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+{% endblock %}

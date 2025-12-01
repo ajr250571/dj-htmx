@@ -1,0 +1,225 @@
+{% load static tailwind_tags %}
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gimnasio PowerFit - Menú Corregido</title>
+    {% tailwind_css %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Estilos personalizados para resolver el problema de solapamiento */
+        :root {
+            --header-height: 64px;
+        }
+        
+        .mobile-header {
+            height: var(--header-height);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+        }
+        
+        .mobile-content {
+            padding-top: var(--header-height);
+            min-height: 100vh;
+        }
+        
+        .drawer-side {
+            z-index: 90;
+        }
+        
+        .drawer-side .menu-container {
+            margin-top: var(--header-height);
+            height: calc(100vh - var(--header-height));
+            overflow-y: auto;
+        }
+        
+        @media (min-width: 1024px) {
+            .mobile-header {
+                display: none;
+            }
+            
+            .mobile-content {
+                padding-top: 0;
+            }
+        }
+    </style>
+</head>
+<body class="bg-base-200">
+    <div class="drawer lg:drawer-open">
+        <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
+        {% block content %}{% endblock content %}
+        
+        <!-- Menú Lateral -->
+        <div class="drawer-side">
+            <label for="my-drawer-2" class="drawer-overlay"></label>
+            
+            <div class="bg-base-100 w-80 flex flex-col menu-container">
+                <!-- Logo y título -->
+                <div class="flex items-center gap-3 p-4 border-b border-base-300">
+                    <div class="avatar">
+                        <div class="w-12 rounded-full bg-primary flex items-center justify-center">
+                            <i class="fas fa-dumbbell text-white text-xl"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-bold">PowerFit Gym</h2>
+                        <p class="text-sm text-base-content/70">Entrena como un campeón</p>
+                    </div>
+                </div>
+                
+                <!-- Información del usuario -->
+                <div class="p-4 border-b border-base-300">
+                    <div class="flex items-center gap-3">
+                        <div class="avatar">
+                            <div class="w-12 rounded-full">
+                                <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" alt="Usuario" />
+                            </div>
+                        </div>
+                        <div>
+                            <p class="font-semibold">María González</p>
+                            <p class="text-sm text-base-content/70">Membresía Premium</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Navegación principal -->
+                <nav class="py-4 flex-1 overflow-y-auto">
+                    <ul class="menu space-y-1">
+                        <li class="menu-title">
+                            <span>Navegación Principal</span>
+                        </li>
+                        <li>
+                            <a class="active">
+                                <i class="fas fa-home"></i>
+                                Inicio
+                            </a>
+                        </li>
+                        <li>
+                            <a>
+                                <i class="fas fa-calendar-alt"></i>
+                                Reservas
+                            </a>
+                        </li>
+                        <li>
+                            <a>
+                                <i class="fas fa-dumbbell"></i>
+                                Mis Rutinas
+                            </a>
+                        </li>
+                        <li>
+                            <a>
+                                <i class="fas fa-chart-line"></i>
+                                Progreso
+                            </a>
+                        </li>
+                        <li>
+                            <a>
+                                <i class="fas fa-users"></i>
+                                Clases Grupales
+                            </a>
+                        </li>
+                        
+                        <!-- Sección de Entrenamiento -->
+                        <li class="menu-title mt-6">
+                            <span>Entrenamiento</span>
+                        </li>
+                        <li>
+                            <a>
+                                <i class="fas fa-running"></i>
+                                Cardio
+                            </a>
+                        </li>
+                        <li>
+                            <a>
+                                <i class="fas fa-weight-hanging"></i>
+                                Fuerza
+                            </a>
+                        </li>
+                        <li>
+                            <a>
+                                <i class="fas fa-heart"></i>
+                                Wellness
+                            </a>
+                        </li>
+                        
+                        <!-- Sección de Gestión -->
+                        <li class="menu-title mt-6">
+                            <span>Mi Cuenta</span>
+                        </li>
+                        <li>
+                            <a>
+                                <i class="fas fa-user"></i>
+                                Perfil
+                            </a>
+                        </li>
+                        <li>
+                            <a>
+                                <i class="fas fa-credit-card"></i>
+                                Membresía
+                            </a>
+                        </li>
+                        <li>
+                            <a>
+                                <i class="fas fa-cog"></i>
+                                Configuración
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                
+                <!-- Footer del menú -->
+                <div class="p-4 border-t border-base-300 space-y-4">
+                    <div class="stats shadow bg-base-200 w-full">
+                        <div class="stat p-4">
+                            <div class="stat-title">Días seguidos</div>
+                            <div class="stat-value text-primary">12</div>
+                            <div class="stat-desc">¡Sigue así!</div>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-outline btn-error w-full gap-2">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Cerrar Sesión
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Script para mejorar la experiencia móvil
+        document.addEventListener('DOMContentLoaded', function() {
+            const drawer = document.getElementById('my-drawer-2');
+            const drawerOverlay = document.querySelector('.drawer-overlay');
+            
+            // Cerrar el menú al hacer clic fuera de él en móviles
+            if (drawerOverlay) {
+                drawerOverlay.addEventListener('click', function() {
+                    drawer.checked = false;
+                });
+            }
+            
+            // Ajustar dinámicamente la altura del contenido si es necesario
+            function adjustContentHeight() {
+                const header = document.querySelector('.mobile-header');
+                const content = document.querySelector('.mobile-content');
+                
+                if (header && content && window.innerWidth < 1024) {
+                    const headerHeight = header.offsetHeight;
+                    document.documentElement.style.setProperty('--header-height', `${headerHeight}px`);
+                }
+            }
+            
+            // Ejecutar al cargar y al redimensionar
+            adjustContentHeight();
+            window.addEventListener('resize', adjustContentHeight);
+        });
+    </script>
+</body>
+</html>
