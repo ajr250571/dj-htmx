@@ -1,6 +1,5 @@
 {% load static tailwind_tags %}
 
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -10,42 +9,38 @@
     {% tailwind_css %}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Estilos personalizados para resolver el problema de solapamiento */
-        :root {
-            --header-height: 64px;
-        }
-        
-        .mobile-header {
-            height: var(--header-height);
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 100;
-        }
-        
-        .mobile-content {
-            padding-top: var(--header-height);
-            min-height: 100vh;
-        }
-        
-        .drawer-side {
-            z-index: 90;
-        }
-        
-        .drawer-side .menu-container {
-            margin-top: var(--header-height);
-            height: calc(100vh - var(--header-height));
-            overflow-y: auto;
-        }
-        
-        @media (min-width: 1024px) {
-            .mobile-header {
-                display: none;
+        /* Solo aplicar el desplazamiento cuando el drawer está abierto en móviles */
+        @media (max-width: 1023px) {
+            .drawer-toggle:checked ~ .drawer-content .mobile-content {
+                transform: translateX(80px);
+                transition: transform 0.3s ease-in-out;
             }
             
-            .mobile-content {
+            /* Asegurar que el header móvil permanezca visible */
+            .mobile-header {
+                z-index: 50;
+            }
+            
+            /* El menú lateral debe estar debajo del header */
+            .drawer-side {
+                z-index: 40;
+                padding-top: 64px; /* Altura aproximada del header */
+            }
+            
+            .drawer-side .menu-container {
+                height: calc(100vh - 64px);
+                overflow-y: auto;
+            }
+        }
+        
+        /* En desktop no necesitamos estos ajustes */
+        @media (min-width: 1024px) {
+            .drawer-side {
                 padding-top: 0;
+            }
+            
+            .drawer-side .menu-container {
+                height: 100vh;
             }
         }
     </style>
@@ -53,7 +48,27 @@
 <body class="bg-base-200">
     <div class="drawer lg:drawer-open">
         <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
-        {% block content %}{% endblock content %}
+        
+        <!-- Contenido principal -->
+        <div class="drawer-content flex flex-col">
+            <!-- Header móvil -->
+            <header class="mobile-header navbar bg-base-100 shadow-sm lg:hidden fixed top-0 left-0 right-0 h-16">
+                <div class="navbar-start">
+                    <label for="my-drawer-2" class="btn btn-ghost drawer-button lg:hidden">
+                        <i class="fas fa-bars text-xl"></i>
+                    </label>
+                </div>
+                <div class="navbar-center">
+                    <a class="btn btn-ghost text-xl font-bold">PowerFit</a>
+                </div>
+                <div class="navbar-end">
+                    <button class="btn btn-ghost btn-circle">
+                        <i class="fas fa-bell"></i>
+                    </button>
+                </div>
+            </header>
+            {% block content %}{% endblock content %}
+        </div>
         
         <!-- Menú Lateral -->
         <div class="drawer-side">
@@ -191,35 +206,5 @@
             </div>
         </div>
     </div>
-
-    <script>
-        // Script para mejorar la experiencia móvil
-        document.addEventListener('DOMContentLoaded', function() {
-            const drawer = document.getElementById('my-drawer-2');
-            const drawerOverlay = document.querySelector('.drawer-overlay');
-            
-            // Cerrar el menú al hacer clic fuera de él en móviles
-            if (drawerOverlay) {
-                drawerOverlay.addEventListener('click', function() {
-                    drawer.checked = false;
-                });
-            }
-            
-            // Ajustar dinámicamente la altura del contenido si es necesario
-            function adjustContentHeight() {
-                const header = document.querySelector('.mobile-header');
-                const content = document.querySelector('.mobile-content');
-                
-                if (header && content && window.innerWidth < 1024) {
-                    const headerHeight = header.offsetHeight;
-                    document.documentElement.style.setProperty('--header-height', `${headerHeight}px`);
-                }
-            }
-            
-            // Ejecutar al cargar y al redimensionar
-            adjustContentHeight();
-            window.addEventListener('resize', adjustContentHeight);
-        });
-    </script>
 </body>
 </html>
